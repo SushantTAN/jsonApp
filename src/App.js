@@ -43,8 +43,8 @@ function App() {
     console.log(formData)
     setFormData({ ...formData, [event.target.id]: event.target.value })
 
-    if(event.target.id === 'status')
-    setFormData({ ...formData, status: event.target.checked })
+    if (event.target.id === 'status')
+      setFormData({ ...formData, status: event.target.checked })
   }
 
   const handleDelete = async (id) => {
@@ -56,7 +56,7 @@ function App() {
 
       const responseJson = await response.json();
 
-      setList(list.filter( el => el.id !== id));
+      setList(list.filter(el => el.id !== id));
 
     } catch (e) {
       console.log("Error:", e);
@@ -89,59 +89,79 @@ function App() {
 
   return (
     <div className="">
-      <form className="column">
+      <div className="heading">Create Table</div>
+      <div className="center">
+        <form className="column">
 
-        <div>
+          {/* <div> */}
           <label>Layout: </label>
-          <select name="layout" id="layout" onChange={handleChange}>
+          <select name="layout" id="layout" onChange={handleChange} className="field" placeholder="Select Layout">
+            <option value="" disabled selected>Select Layout</option>
             <option value="layout1">Layout 1</option>
             <option value="layout2">Layout 2</option>
             <option value="layout3">Layout 3</option>
             <option value="layout4">Layout 4</option>
           </select>
-        </div>
+          {/* </div> */}
 
-        <div>
+          {/* <div> */}
           <label>Name: </label>
-          <input type="text" placeholder="Enter Name" id="name" onChange={handleChange} />
-        </div>
+          <input className="field" type="text" placeholder="Enter Name" id="name" onChange={handleChange} />
+          {/* </div> */}
 
-        <div>
+          {/* <div> */}
           <label>Capacity: </label>
-          <input type="number" placeholder="Enter number of capacity" id="capacity" onChange={handleChange} />
-        </div>
+          <input className="field" type="number" placeholder="Enter number of capacity" id="capacity" onChange={handleChange} />
+          {/* </div> */}
 
-        <div>
+          {/* <div> */}
           <label>Status: </label>
-          <input type="checkbox" id="status" name="status" value="status" onChange={handleChange} />
-        </div>
+          <input type="checkbox" className="field" id="status" name="status" value="status" onChange={handleChange} />
+          {/* </div> */}
 
-        <div>
+          {/* <div> */}
           <label>Image: </label>
-          <input type="file" id="image" name="image" onChange={handleChange} />
+          <input className="file" type="file" id="image" name="image" onChange={handleChange} />
+          {/* </div> */}
+
+
+        </form>
+
+        <div className="column buttoncontainer">
+          <div></div>
+          <div>
+            <button onClick={handleSubmit} className="buttonBlue">Create Table</button>
+            <button onClick={handleCancel} className="buttonRed">Cancel</button>
+          </div>
         </div>
-
-
-      </form>
-
-      <div>
-        <button onClick={handleSubmit}>Create Table</button>
-        <button onClick={handleCancel}>Cancel</button>
-
       </div>
 
 
-      <div>
-        <div>
-          {
-            list.map((item, index) => <div>
-              {item.name} &nbsp;&nbsp;&nbsp;&nbsp; {item.username} &nbsp;&nbsp;&nbsp;&nbsp; {item.phone} &nbsp;&nbsp;&nbsp;&nbsp; {item.email} &nbsp;&nbsp;&nbsp;&nbsp; {item.website}
 
-              <button>Edit</button>
-              <button onClick={() => handleDelete(item.id)}>delete</button>
-            </div>)
+
+      <div className="center">
+        <table>
+          <tr>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Capacity</th>
+            <th>Image</th>
+            <th>Layout</th>
+            <th>Actions</th>
+          </tr>
+          {
+            list.map((item, index) => <tr>
+              <td>{item.name}</td>
+              <td>{item.username ? "true" : "false"}</td>
+              <td>{item.phone}</td>
+              <td>{item.email}</td>
+              <td>{item.website}</td>
+
+              {/* <button className="buttonBlue">Edit</button> */}
+              <button className="buttonRed" onClick={() => handleDelete(item.id)}>delete</button>
+            </tr>)
           }
-        </div>
+        </table>
       </div>
     </div>
   );
